@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People Searcher</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2>People Searcher</h2>
+
+    <h3>Online Config (Optional)</h3>
+    <table id="config">
+        <thead>
+            <tr>
+                <td><input type="text" id="server" placeholder="Server URL"></td>
+                <td><input type="text" id="key" placeholder="XXXX-XXXX-XXXX-XXXX"></td>
+            </tr>
+        </thead>
+    </table>
+    
+    <h3>URLs Config</h3>
+    <textarea id="urls" placeholder="Enter URLs (one per line)"></textarea>
+
+    <h3>People to Search</h3>
+
+    <button id="add-row" class="menu">+</button>
+    <button id="search-button" class="menu">Save & Search</button>
+    <button id="saveConfig-button" class="menu">Save Configs</button>
+    <button id="sync-button" class="menu">Sync Online</button>
+    <br><br>
+
+    <table id="search-table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Reason</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+    
+    <script src="configManager.js"></script>
+    <script src="person.js"></script>
+    <script src="peopleManager.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
