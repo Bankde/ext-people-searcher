@@ -24,29 +24,6 @@ class Person {
         return `${this.firstName} ${this.lastName}`;
     }
 
-    toRowElement() {
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-            <td><input type="text" class="first-name" value="${this.firstName}"></td>
-            <td><input type="text" class="last-name" value="${this.lastName}"></td>
-            <td><input type="text" class="reason" value="${this.reason}"></td>
-            <td><button class="remove-row">−</button></td>
-        `;
-
-        // Add remove listener and input change save
-        tr.querySelector(".remove-row").addEventListener("click", () => {
-            tr.remove();
-            savePeople();
-        });
-
-        tr.querySelectorAll("input").forEach(input => {
-            input.addEventListener("input", savePeople);
-        });
-
-        return tr;
-    }
-
     static fromJSON(json) {
         return new Person(json.firstName, json.lastName, json.reason, json.status, json.dirty, json.timestamp);
     }

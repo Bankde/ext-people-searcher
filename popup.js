@@ -52,16 +52,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         let row = document.createElement("tr");
 
         row.innerHTML = `
-            <td><input type="text" class="first-name input" value="${firstName}"></td>
-            <td><input type="text" class="last-name input" value="${lastName}"></td>
-            <td><input type="text" class="reason input" value="${reason}"></td>
+            <td><input type="text" class="first-name input" value=""></td>
+            <td><input type="text" class="last-name input" value=""></td>
+            <td><input type="text" class="reason input" value=""></td>
             <td>
                 <button class="remove-row">−</button>
-                <input type="hidden" class="dirty" value=${dirty} hidden="true">
+                <input type="hidden" class="dirty" value="" hidden="true">
                 <input type="hidden" class="deleted" value=0 hidden="true">
             </td>
         `;
 
+        // Set data into row
+        row.querySelector(".first-name").value = firstName;
+        row.querySelector(".last-name").value = lastName;
+        row.querySelector(".reason").value = reason;
+        row.querySelector(".dirty").value = dirty;
+        //
         tableBody.appendChild(row);
 
         // Add event listener for removing rows
