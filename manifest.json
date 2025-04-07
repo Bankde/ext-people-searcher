@@ -9,8 +9,12 @@
         "128": "icons/icon-128.png"
     },
     "browser_action": {
-        "default_popup": "popup.html",
+        "default_title": "People Search",
         "default_icon": "icons/icon-48.png"
+    },
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
     },
     "permissions": ["activeTab", "storage", "tabs"],
     "content_scripts": [
