@@ -26,9 +26,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Create row from data
     peopleManager.getAll().map(person => addRowLoad(person));
     // Load saved configs in HTML
-    urlsInput.value = configManager.getConfig("urls");
-    syncServerInput.value = configManager.getConfig("syncServer");
-    syncServerKeyInput.value = configManager.getConfig("syncServerKey");
+    urlsInput.value = configManager.getConfig("urls") ?? "";
+    syncServerInput.value = configManager.getConfig("syncServer") ?? "";
+    syncServerKeyInput.value = configManager.getConfig("syncServerKey") ?? "";
 
     async function saveConfig() {
         configManager.setConfig("urls", urlsInput.value);
@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function addRowLoad(person) {
         console.log(person);
+        if (person.status !== Person.Status.CREATED) return;
         addRow(person.firstName, person.lastName, person.reason, person.dirty);
     }
 
@@ -56,24 +57,24 @@ document.addEventListener("DOMContentLoaded", async () => {
             <td><input type="text" class="reason input" value="${reason}"></td>
             <td>
                 <button class="remove-row">−</button>
-                <input type="text" class="dirty" value=${dirty} hidden="true">
+                <input type="hidden" class="dirty" value=${dirty} hidden="true">
+                <input type="hidden" class="deleted" value=0 hidden="true">
             </td>
         `;
 
         tableBody.appendChild(row);
 
         // Add event listener for removing rows
-        row.querySelector(".remove-row").addEventListener("click", () => removeRow(row));
+        let deletedMarking = row.querySelector(".deleted");
+        row.querySelector(".remove-row").addEventListener("click", () => {
+            deletedMarking.value = 1;
+            row.setAttribute("hidden", "true");
+        });
         // Mark dirty to update the database
-        let dirtyMarking = row.querySelector(".dirty")
+        let dirtyMarking = row.querySelector(".dirty");
         row.querySelector(".input").addEventListener("input", () => {
             dirtyMarking.value = dirty;
         });
-    }
-
-    // Function to remove a row
-    function removeRow(row) {
-        row.remove();
     }
 
     // Save table data to storage
@@ -92,14 +93,20 @@ document.addEventListener("DOMContentLoaded", async () => {
                     let firstName = row.querySelector(".first-name").value.trim();
                     let lastName = row.querySelector(".last-name").value.trim();
                     let reason = row.querySelector(".reason").value.trim();
-                    let dirty = row.querySelector(".dirty").value;
+                    let dirty = parseInt(row.querySelector(".dirty").value);
+                    let isDeleted = parseInt(row.querySelector(".deleted").value);
 
                     // If no change, then skip
                     if (dirty === 0) return;
 
                     if (firstName || lastName) {
-                        let newPerson = new Person(firstName, lastName, reason, Person.Status.CREATED, 1, Date.now())
-                        peopleManager.add(newPerson);
+                        if (isDeleted === 1) {
+                            let rmPerson = new Person(firstName, lastName, reason, Person.Status.DELETED, 1, Date.now())
+                            peopleManager.remove(rmPerson);
+                        } else {
+                            let newPerson = new Person(firstName, lastName, reason, Person.Status.CREATED, 1, Date.now())
+                            peopleManager.add(newPerson);
+                        }
                     }
                 });
 

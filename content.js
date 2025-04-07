@@ -41,12 +41,16 @@ async function initSearch() {
     searchTextOnPage();
 
     // Watch for dynamic content changes
-    let observer = new MutationObserver(() => searchTextOnPage());
+    let observer = new MutationObserver(() => { searchTextOnPage(); });
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
 // Run search on page load
-window.addEventListener("load", async() => { await initSearch() });
+if (document.readyState !== 'loading') {
+    (async () => { await initSearch() })();
+} else {
+    document.addEventListener("DOMContentLoaded", async() => { await initSearch() });
+}
 
 // Keep listening for manual searches from popup
 browser.runtime.onMessage.addListener(async(request, sender, sendResponse) => {

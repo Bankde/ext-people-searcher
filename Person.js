@@ -14,8 +14,8 @@ class Person {
     });
 
     setStatus(status) {
-        if (!Status.values().includes(status)) {
-            throw new Error(`Invalid Status: ${reason}`);
+        if (!Object.values(Person.Status).includes(status)) {
+            throw new Error(`Invalid Status: ${status}`);
         }
         this.status = status;
     }

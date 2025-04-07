@@ -16,7 +16,7 @@
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["configManager.js", "person.js", "peopleManager.js", "content.js"]
+            "js": ["ConfigManager.js", "Person.js", "PeopleManager.js", "content.js"]
         }
     ]
 }

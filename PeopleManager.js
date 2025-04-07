@@ -15,7 +15,7 @@ class PeopleManager {
     }
 
     remove(person) {
-        person.setStatus(person.DELETED);
+        person.setStatus(Person.Status.DELETED);
         let key = person._makeKey();
         this.people[key] = person;
     }
