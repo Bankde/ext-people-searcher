@@ -20,6 +20,16 @@ class PeopleManager {
         this.people[key] = person;
     }
 
+    realRemove(person) {
+        let key = person._makeKey();
+        delete this.people[key];
+    }
+
+    reset() {
+        console.log("Reset PeopleManager data");
+        this.people = {};
+    }
+
     get(key) {
         return this.people[key] || null;
     }

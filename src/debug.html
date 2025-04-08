@@ -3,39 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>People Searcher</title>
+    <title>People Searcher Debugging</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="body popupBody">
+<body class="body dirtyBody">
     <h2>People Searcher</h2>
 
-    <h3>Configurations</h3>
+    <h3>Last Sync Timestamp</h3>
+
     <table id="config">
         <tbody>
             <tr>
-                <td><input type="text" id="server" placeholder="Server URL"></td>
-                <td><input type="text" id="key" placeholder="XXXX-XXXX-XXXX-XXXX"></td>
-                <td rowspan="2">
-                    <button id="toggle-button" class="menu">ENABLE</button>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <textarea id="urls" placeholder="URLs for search (Accept partial) (one per line)"></textarea>
-                </td>
+                <td><input type="text" id="lastSyncTime" placeholder="0"></td>
             </tr>
         </tbody>
     </table>
 
     <button id="saveConfig-button" class="menu">Save Configs</button>
-    <button id="debugger-button" class="menu">Debugger</button>
 
     <h3>People to Search</h3>
 
-    <button id="add-row" class="menu">+</button>
-    <button id="search-button" class="menu">Save & Search</button>
-    <button id="sync-button" class="menu">Sync Online</button>
-    <br><br>
+    <button id="save-button" class="menu">Save</button>
 
     <table id="search-table">
         <thead>
@@ -43,6 +31,9 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Reason</th>
+                <th>Status</th>
+                <th>Dirty</th>
+                <th>Timestamp</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -54,6 +45,6 @@
     <script src="ConfigManager.js"></script>
     <script src="Person.js"></script>
     <script src="PeopleManager.js"></script>
-    <script src="popup.js"></script>
+    <script src="debug.js"></script>
 </body>
 </html>

@@ -34,8 +34,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const searchButton = document.getElementById("search-button");
     const saveConfigButton = document.getElementById("saveConfig-button");
     const syncButton = document.getElementById("sync-button");
+    const debuggerButton = document.getElementById("debugger-button");
     // Singleton
-    const peopleManager = new PeopleManager()
+    const peopleManager = new PeopleManager();
     const configManager = new ConfigManager();
 
     // Load stored values into memory
@@ -169,6 +170,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     saveConfigButton.addEventListener("click", async() => { await saveConfig() });
+
+    debuggerButton.addEventListener("click", () => {
+        chrome.windows.create({
+            url: chrome.runtime.getURL("debug.html"),
+            type: "popup",
+            width: 1400,
+            height: 600
+        });
+    });
 
     syncButton.addEventListener("click", () => {
 

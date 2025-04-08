@@ -2,10 +2,17 @@ body {
     margin: 0;
     padding: 10px;
     box-sizing: border-box;
-    width: 800px;
     overflow-x: hidden;
     /* <-- This hides horizontal scroll */
     font-family: sans-serif;
+}
+
+#popupBody {
+    width: 800px;
+}
+
+#debugBody {
+    width: 1400px;
 }
 
 .container {
