@@ -11,17 +11,24 @@
 
     <h3>Configurations</h3>
     <table id="config">
-        <thead>
+        <tbody>
             <tr>
                 <td><input type="text" id="server" placeholder="Server URL"></td>
                 <td><input type="text" id="key" placeholder="XXXX-XXXX-XXXX-XXXX"></td>
+                <td rowspan="2">
+                    <button id="toggle-button" class="menu">ENABLE</button>
+                </td>
             </tr>
-        </thead>
+            <tr>
+                <td colspan="2">
+                    <textarea id="urls" placeholder="URLs for search (Accept partial) (one per line)"></textarea>
+                </td>
+            </tr>
+        </tbody>
     </table>
 
-    <textarea id="urls" placeholder="URLs for search (Accept partial) (one per line)"></textarea>
-
     <button id="saveConfig-button" class="menu">Save Configs</button>
+    <button id="debug-button" class="menu">Debugger</button>
 
     <h3>People to Search</h3>
 

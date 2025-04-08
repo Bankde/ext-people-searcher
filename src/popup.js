@@ -1,6 +1,3 @@
-// Singleton
-let Loaded = false;
-
 document.addEventListener("DOMContentLoaded", async () => {
     // Configs HTML
     const urlsInput = document.getElementById("urls");
@@ -17,11 +14,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const configManager = new ConfigManager();
 
     // Load stored values into memory
-    if (Loaded === false) {
-        await configManager.loadConfigs();
-        await peopleManager.loadFromStorage();
-        Loaded = true;
-    }
+    await configManager.loadConfigs();
+    await peopleManager.loadFromStorage();
 
     // Create row from data
     peopleManager.getAll().map(person => addRowLoad(person));
@@ -29,6 +23,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     urlsInput.value = configManager.getConfig("urls") ?? "";
     syncServerInput.value = configManager.getConfig("syncServer") ?? "";
     syncServerKeyInput.value = configManager.getConfig("syncServerKey") ?? "";
+
+    const toggleButton = document.getElementById("toggle-button");
+
+    // Function to update the button UI
+    function updateToggleButton() {
+        if (configManager.isEnabled) {
+            toggleButton.textContent = "ENABLED";
+            toggleButton.classList.add("enabled");
+            toggleButton.classList.remove("disabled");
+        } else {
+            toggleButton.textContent = "DISABLED";
+            toggleButton.classList.add("disabled");
+            toggleButton.classList.remove("enabled");
+        }
+    }
+
+    // Button click handler to toggle state
+    toggleButton.addEventListener("click", async () => {
+        configManager.enableToggle();
+        await configManager.saveButtonState();
+        updateToggleButton();
+    });
+
+    // Load Enable Button and State
+    await configManager.loadButtonState();
+    updateToggleButton();
 
     async function saveConfig() {
         configManager.setConfig("urls", urlsInput.value);
@@ -38,7 +58,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function addRowLoad(person) {
-        console.log(person);
         if (person.status !== Person.Status.CREATED) return;
         addRow(person.firstName, person.lastName, person.reason, person.dirty);
     }

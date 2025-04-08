@@ -4,7 +4,10 @@ let peopleManager = new PeopleManager();
 // We will mark a person who has been alerted so we don't get dupe.
 let people = [];
 
-function searchTextOnPage() {
+async function searchTextOnPage() {
+    await configManager.loadButtonState();
+    if (!configManager.isEnabled) return;
+
     let pageUrl = window.location.href;
     let urls = configManager.parseUrls();
 
@@ -38,10 +41,10 @@ async function initData() {
 // Fetch stored data and start searching
 async function initSearch() {
     await initData();
-    searchTextOnPage();
+    await searchTextOnPage();
 
     // Watch for dynamic content changes
-    let observer = new MutationObserver(() => { searchTextOnPage(); });
+    let observer = new MutationObserver(async() => { await searchTextOnPage(); });
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
@@ -56,7 +59,7 @@ if (document.readyState !== 'loading') {
 browser.runtime.onMessage.addListener(async(request, sender, sendResponse) => {
     if (request.action === "load and search") {
         await initData();
-        searchTextOnPage();
+        await searchTextOnPage();
         sendResponse({ success: true });
     }
     return true;

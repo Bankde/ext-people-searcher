@@ -1,4 +1,4 @@
-// Singleton for managing URL configurations
+// Singleton for managing configurations
 class ConfigManager {
     constructor() {
         if (ConfigManager.instance) {
@@ -48,5 +48,23 @@ class ConfigManager {
             return this.configs.urls.split("\n").map(url => url.trim());
         }
         return [];
+    }
+
+    // Enable Button
+    isEnabled = true;
+
+    enableToggle() {
+        this.isEnabled = !this.isEnabled;
+    }
+
+    async loadButtonState() {
+        const data = await browser.storage.local.get("buttonState");
+        if (data.buttonState) {
+            this.isEnabled = data.buttonState === "enabled";  // Parse "enabled"/"disabled" as boolean
+        }
+    }
+
+    async saveButtonState() {
+        await browser.storage.local.set( { "buttonState": this.isEnabled ? "enabled" : "disabled" } );
     }
 }

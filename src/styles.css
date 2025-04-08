@@ -3,30 +3,82 @@ body {
     padding: 10px;
     box-sizing: border-box;
     width: 800px;
-    overflow-x: hidden; /* <-- This hides horizontal scroll */
+    overflow-x: hidden;
+    /* <-- This hides horizontal scroll */
     font-family: sans-serif;
 }
-  
+
 .container {
     display: flex;
     gap: 10px;
 }
+
 .column {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
-textarea {
-    width: 60%;
-    height: 40px;
-    resize: none;
-}
-button .menu {
-    margin-top: 10px;
+
+#config {
+    width: 90%;
 }
 
-#saveConfig-button {
+#config tr, td {
+    height: 100%;
+}
+
+#config textarea {
+    width: 98%;
+    height: 80px;
+    resize: none;
+    margin: 5px;
+}
+#config input {
+    width: 95%;
+    margin: 5px;
+}
+
+/* Enable button */
+#config #toggle-button {
+    margin-left: 10px;
+    width: 100px;
+    height: 100%;
     display: block;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#toggle-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#toggle-button.enabled {
+    background-color: #e0f6e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+#toggle-button.enabled:hover {
+    background-color: #c8e6c9;
+}
+
+#toggle-button.disabled {
+    background-color: #fce4e4;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+#toggle-button.disabled:hover {
+    background-color: #ffcdd2;
+}
+/**/
+
+button .menu {
     margin-top: 10px;
 }
 
@@ -36,13 +88,15 @@ button .menu {
 }
 
 #search-table thead tr {
-    background-color: #f0f0f0; /* Optional: style your header row */
+    background-color: #f0f0f0;
+    /* Optional: style your header row */
 }
 
 #search-table {
     border-collapse: collapse;
     width: 90%;
-    table-layout: fixed; /* Ensures consistent column widths */
+    table-layout: fixed;
+    /* Ensures consistent column widths */
 }
 
 #search-table thead {
@@ -51,10 +105,14 @@ button .menu {
 
 #search-table thead th {
     background-color: #f5f5f5;
-    position: sticky;         /* Makes header "stick" */
-    top: 0;                   /* Position from top */
-    z-index: 1;               /* Sits above tbody */
-    height: 30px;             /* Fixed height */
+    position: sticky;
+    /* Makes header "stick" */
+    top: 0;
+    /* Position from top */
+    z-index: 1;
+    /* Sits above tbody */
+    height: 30px;
+    /* Fixed height */
     vertical-align: middle;
 }
 
@@ -65,6 +123,6 @@ button .menu {
 /* Reduce column width for "Action" */
 #search-table th:last-child,
 #search-table td:last-child {
-  width: 80px; /* Or smaller, adjust as needed */
-  text-align: center;
+    width: 80px;
+    text-align: center;
 }
