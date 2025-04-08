@@ -1,3 +1,28 @@
+// Helper function
+async function getRealContentTab() {
+    const allTabs = await browser.tabs.query({}); // get all tabs
+
+    for (const tab of allTabs) {
+        if (
+            tab.active &&
+            !tab.url.startsWith("moz-extension://") &&
+            tab.url.startsWith("http") // optionally restrict to web pages only
+        ) {
+            return tab;
+        }
+    }
+
+    // fallback: pick the first non-extension tab
+    const contentTab = allTabs.find(
+        t => !t.url.startsWith("moz-extension://") && t.url.startsWith("http")
+    );
+
+    if (contentTab) return contentTab;
+
+    throw new Error("No valid content tab found.");
+}
+// ------------------------------------------------------ //
+
 document.addEventListener("DOMContentLoaded", async () => {
     // Configs HTML
     const urlsInput = document.getElementById("urls");
@@ -137,9 +162,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 await savePeople();
 
-                browser.tabs.sendMessage(tabs[0].id, {
-                    action: "load and search"
-                });
+                const tab = await getRealContentTab();
+                await browser.tabs.sendMessage(tab.id, { action: "load and search" });
             }
         });
     });
